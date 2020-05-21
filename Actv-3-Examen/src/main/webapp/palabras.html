@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Palabras</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container p-4">
+    <div class="row">
+        <div class="col md-5">
+            <div class="card card-body" id="form">
+                <div class="form-group">
+                    <label for="firstWord" class="label label-default">Primera Palabra:</label>
+                    <input type="text" class="form-control" id="firstWord">
+                </div>
+                <div class="form-group">
+                    <label for="secondWord" class="label label-default">Segunda Palabra:</label>
+                    <input type="text" class="form-control" id="secondWord">
+                </div>
+                <div class="form-group">
+                    <label for="thirdWord" class="label label-default">Tercera Palabra:</label>
+                    <input type="text" class="form-control" id="thirdWord">
+                </div>
+                <button type="button" id="btnEnviar" class="btn btn-success">Enviar al Servidor</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container p-4" id="divResult">
+    <div class="row">
+        <div class="col md-5">
+            <div class="card card-body">
+                <div class="form-group">
+                    <input class="form-control" id="txtResultado">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const version = "1.0.0"; // Esto es unicamente para saber en que momento está cargada la nueva versión tras modificaciones en el servidor;
+    const nombreServlet = "concatenar.do";
+    var btnEnvio = document.getElementById('btnEnviar');
+    var txtResult = document.getElementById('txtResultado');
+
+
+    console.log(version);
+
+    btnEnvio.addEventListener("click",function (e) {
+        var primeraPalabra = document.getElementById('firstWord');
+        var segundaPalabra = document.getElementById('secondWord');
+        var terceraPalabra = document.getElementById('thirdWord');
+        e.preventDefault();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST",nombreServlet,true);
+        console.log(" Bienvenido al POST hacia el servlet: "+nombreServlet);
+        xhr.onreadystatechange = function () {
+            console.log("  ReadyState: "+xhr.readyState);
+            if ((xhr.readyState == 4)&&(xhr.status == 200)){
+                console.log("  Respuesta: "+xhr.responseText);
+                let jsonRec = JSON.parse(xhr.responseText);
+                if (jsonRec.status == "KO"){
+                    console.log("  Ha salido mal la respuesta desde: "+nombreServlet);
+                    console.log("  Ha dado el error: "+jsonRec.excepcion);
+                }
+                else if (jsonRec.status == "OK"){
+                    txtResult.value = "La concatenacion de "+jsonRec.plb1+", "+jsonRec.plb2+" y "+jsonRec.plb3+" es: "+jsonRec.concatenation+".";
+                }
+            }
+        }
+        let data = {palabra1:primeraPalabra.value,palabra2:segundaPalabra.value,palabra3:terceraPalabra.value};
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+        xhr.send(JSON.stringify(data));
+    })
+</script>
+</body>
+</html>
