@@ -1,13 +1,14 @@
 package com.politecnicomalaga;
 
 import com.politecnicomalaga.factory.*;
+import com.politecnicomalaga.pizzas.Pizza;
 
 import java.util.Scanner;
 
 public class App {
 
     private static Scanner lectorTeclado = new Scanner(System.in).useDelimiter("\n");
-    private static Pizza pizza;
+    private static Pizza pizza = new Pizza();
 
     public static void main(String[] args){
 
@@ -20,9 +21,10 @@ public class App {
 
         int tipoPizza = lectorTeclado.nextInt();
         PizzaFactory factory = new PizzaFactory();
-        factory.crearPizza(tipoPizza);
-        System.out.println("Pasos a seguir:");
-        System.out.println(pizza.preparar());
+
+        HacerPizza hacerPizza = factory.crearPizza(tipoPizza);
+
+        System.out.println(hacerPizza.preparar());
         System.out.println(pizza.hornear());
         System.out.println(pizza.cortar());
         System.out.println(pizza.empaquetar());

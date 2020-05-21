@@ -1,5 +1,10 @@
 package com.politecnicomalaga.factory;
 
+import com.politecnicomalaga.pizzas.Pizza4Estaciones;
+import com.politecnicomalaga.pizzas.PizzaMargarita;
+import com.politecnicomalaga.pizzas.PizzaProsciutto;
+import com.politecnicomalaga.pizzas.PizzaVegana;
+
 public class PizzaFactory {
     public final static int ESTACIONES = 1;
     public final static int MARGARITA = 2;
