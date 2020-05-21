@@ -1,10 +1,6 @@
 package com.politecnicomalaga.factory;
 
 public abstract class Pizza {
-    public final static int ESTACIONES = 1;
-    public final static int MARGARITA = 2;
-    public final static int PROSCIUTTO = 3;
-    public final static int VEGANA = 4;
 
     public abstract String preparar();
     public String hornear(){

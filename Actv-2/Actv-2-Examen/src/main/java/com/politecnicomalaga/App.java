@@ -19,18 +19,8 @@ public class App {
                 "Opción: ");
 
         int tipoPizza = lectorTeclado.nextInt();
-
-        if (tipoPizza == Pizza.ESTACIONES)
-            pizza = new Pizza4Estaciones();
-        else if (tipoPizza == Pizza.MARGARITA)
-            pizza = new PizzaMargarita();
-        else if (tipoPizza == Pizza.PROSCIUTTO)
-            pizza = new PizzaProsciutto();
-        else if (tipoPizza == Pizza.VEGANA)
-            pizza = new PizzaVegana();
-        else
-            pizza = new PizzaMargarita();
-
+        PizzaFactory factory = new PizzaFactory();
+        factory.crearPizza(tipoPizza);
         System.out.println("Pasos a seguir:");
         System.out.println(pizza.preparar());
         System.out.println(pizza.hornear());

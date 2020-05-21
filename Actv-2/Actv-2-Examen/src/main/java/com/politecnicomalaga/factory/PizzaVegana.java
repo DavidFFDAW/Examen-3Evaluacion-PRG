@@ -1,6 +1,6 @@
 package com.politecnicomalaga.factory;
 
-public class PizzaVegana extends Pizza{
+public class PizzaVegana extends Pizza implements HacerPizza {
     @Override
     public String preparar() {
         return "Extender masa\n" +
